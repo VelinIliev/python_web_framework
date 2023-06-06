@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'employee delete' pk=employee.id %}" method="post">
+    <h1>Do you want to delete {{ employee.full_name }}?</h1>
+    {% csrf_token %}
+    <button>YES</button>
+</form>
+</body>
+</html>

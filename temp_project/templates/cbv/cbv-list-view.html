@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ title }}</h1>
+<form action="{% url 'list view' %}" method="get">
+    <label>
+        <input name="pattern" placeholder="Search by name or level" value="{{ pattern }}"/>
+    </label>
+    <button>Find</button>
+    {% csrf_token %}
+</form>
+<p></p>
+<a href="{% url 'employee create' %}">Create new employee</a>
+
+<ul>
+    {% for employee in object_list %}
+        <li>
+            <a href="{% url 'employee details' pk=employee.id %}">
+                {{ employee.full_name }} - {{ employee.seniority_level }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
