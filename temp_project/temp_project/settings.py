@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'temp_project.class_based_views',
+    'temp_project.auth_and_auth',
 ]
 
 MIDDLEWARE = [
@@ -92,3 +93,5 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'staticfiles']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/customlogin'
