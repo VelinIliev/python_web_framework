@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from decouple import config
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,6 +21,8 @@ INSTALLED_APPS = [
 
     'temp_project.class_based_views',
     'temp_project.auth_and_auth',
+    'temp_project.user_and_pass',
+    'temp_project.web',
 ]
 
 MIDDLEWARE = [
@@ -94,4 +97,5 @@ STATICFILES_DIRS = [BASE_DIR / 'staticfiles']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/customlogin'
+LOGIN_URL = reverse_lazy('sign in')
+LOGOUT_REDIRECT_URL = reverse_lazy('index web')
