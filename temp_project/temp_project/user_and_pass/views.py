@@ -1,26 +1,24 @@
-from django.contrib.auth import forms as auth_forms, login
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django import forms
-from django.http import HttpResponse
+from django.contrib.auth import login, get_user_model
+from django.contrib.auth import views as auth_views
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
-from django.shortcuts import render, redirect
+
+from temp_project.user_and_pass.forms import SignUpForm
+
+# from temp_project.user_and_pass.forms import SignUpForm
+
+UserModel = get_user_model()
 
 
 def index(request):
-    users = User.objects.all()
+    users = UserModel.objects.all()
     context = {
         'users': users,
     }
     return render(request, 'user_and_pass/index.html', context)
-
-
-class SignUpForm(auth_forms.UserCreationForm):
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name')
-        field_classes = {'username': auth_forms.UsernameField}
 
 
 class SignUpView(views.CreateView):
