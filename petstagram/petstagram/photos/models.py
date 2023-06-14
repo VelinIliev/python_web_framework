@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 from petstagram.pets.models import Pet
 from petstagram.photos.validators import validate_file_size
 from petstagram.common.utils.mixins import StrFromFieldsMixin
+
+UserModel = get_user_model()
 
 
 class Photo(StrFromFieldsMixin, models.Model):
@@ -44,4 +47,8 @@ class Photo(StrFromFieldsMixin, models.Model):
         Pet,
         blank=True,
         null=True
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.RESTRICT,
     )

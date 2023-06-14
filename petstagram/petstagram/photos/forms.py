@@ -1,14 +1,17 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
 from petstagram.common.models import Like, Comment
 from petstagram.photos.models import Photo
 
+UserModel = get_user_model()
+
 
 class PhotoBaseForm(forms.ModelForm):
     class Meta:
         model = Photo
-        exclude = ('publication_date',)
+        exclude = ('publication_date', 'user')
 
 
 class PhotoCreateForm(PhotoBaseForm):

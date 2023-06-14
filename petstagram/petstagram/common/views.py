@@ -1,4 +1,5 @@
 import pyperclip
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -6,7 +7,7 @@ from django.urls import reverse
 from petstagram.common.forms import PhotoCommentForm, SearchPhotosForm
 from petstagram.common.models import Like
 from petstagram.photos.models import Photo
-from petstagram.common.utils.utils import get_user_liked_photo, get_photo_url, apply_likes_count, apply_user_liked_photo
+from petstagram.common.utils.utils import get_photo_url, apply_likes_count, apply_user_liked_photo
 
 
 def index(request):
@@ -32,12 +33,16 @@ def index(request):
     return render(request, 'common/home-page.html', context)
 
 
+@login_required
 def like_photo(request, photo_id):
-    user_liked_photos = get_user_liked_photo(photo_id)
+    user_liked_photos = Like.objects.filter(
+        to_photo_id=photo_id,
+        user_id=request.user.pk,
+    )
     if user_liked_photos:
         user_liked_photos.delete()
     else:
-        Like.objects.create(to_photo_id=photo_id)
+        Like.objects.create(to_photo_id=photo_id, user_id=request.user.pk)
 
     redirect_path = get_photo_url(request, photo_id)
     return redirect(redirect_path)
@@ -52,6 +57,7 @@ def share_photo(request, photo_id):
     return redirect(get_photo_url(request, photo_id))
 
 
+@login_required
 def comment_photo(request, photo_id):
     photo = Photo.objects.filter(pk=photo_id).get()
     form = PhotoCommentForm(request.POST)

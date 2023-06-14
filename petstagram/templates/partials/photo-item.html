@@ -109,7 +109,7 @@
         <!-- End Like and Share Buttons -->
 
         <!-- Number of Likes per Photo -->
-        <p class="likes">{{ photo.likes_count }}</p>
+        <p class="likes">{{ photo.likes_count }} likes</p>
         {% for pet in photo.tagged_pets.all %}
             <a href="{% url 'details pet' username='doncho' pet_slug=pet.slug %}">
                 <p class="message">
