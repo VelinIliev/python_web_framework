@@ -23,9 +23,13 @@ INSTALLED_APPS = [
     'temp_project.auth_and_auth',
     'temp_project.user_and_pass',
     'temp_project.web',
+    'temp_project.web_tools',
 ]
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',
+    'temp_project.middleware.measure_time_middleware',
+    'temp_project.middleware.MeasureTimeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -33,6 +37,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'temp_project.urls'
@@ -82,7 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -101,3 +106,11 @@ LOGIN_URL = reverse_lazy('sign in')
 LOGOUT_REDIRECT_URL = reverse_lazy('index web')
 
 AUTH_USER_MODEL = 'user_and_pass.AppUser'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+    }
+}
+# docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest

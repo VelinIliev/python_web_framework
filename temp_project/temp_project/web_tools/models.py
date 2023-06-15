@@ -1,0 +1,39 @@
+from django.contrib.auth import get_user_model
+from django.db import models
+
+UserModel = get_user_model()
+
+
+class Employees(models.Model):
+    first_name = models.CharField(
+        null=True,
+        blank=True,
+    )
+    last_name = models.CharField(
+        null=True,
+        blank=True,
+    )
+    age = models.IntegerField(
+        null=True,
+        blank=True,
+    )
+    user = models.OneToOneField(
+        UserModel,
+        primary_key=True,
+        on_delete=models.CASCADE,
+    )
+
+
+class PageViewTest(models.Model):
+    first_name = models.CharField(
+        null=True,
+        blank=True,
+    )
+    last_name = models.CharField(
+        null=True,
+        blank=True,
+    )
+    age = models.IntegerField(
+        null=True,
+        blank=True,
+    )

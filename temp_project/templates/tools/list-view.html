@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="{% url 'paginator tools' %}" method="get">
+    <label>Page Size:
+        <select name="page_size">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </label>
+    <button>Set</button>
+</form>
+<div>
+    <a href="{% url 'paginator tools' %}?page_size=3">3</a>
+    <a href="{% url 'paginator tools' %}?page_size=4">4</a>
+    <a href="{% url 'paginator tools' %}?page_size=5">5</a>
+</div>
+<ul>
+    {% for employee in object_list %}
+        <li>{{ employee.first_name }} {{ employee.last_name }} - {{ employee.age }} years</li>
+    {% endfor %}
+</ul>
+{% if page_obj.has_previous %}
+    <a href="?page=1">first</a>
+    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+{% else %}
+    <a>first</a>
+    <a>previous</a>
+{% endif %}
+<span>.  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}  .</span>
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">next</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">last</a>
+{% else %}
+    <a>next</a>
+    <a>last</a>
+{% endif %}
+</body>
+</html>
