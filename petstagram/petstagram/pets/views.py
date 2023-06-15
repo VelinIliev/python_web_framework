@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from petstagram.pets.forms import PetDeleteForm, PetCreateForm, PetEditForm
-from petstagram.pets.utils import get_by_petname_and_username
+from petstagram.pets.utils import get_by_petname_and_username, is_owner
 
 
 @login_required
@@ -33,6 +33,9 @@ def details_pet(request, username, pet_slug):
 
 def edit_pet(request, username, pet_slug):
     pet = get_by_petname_and_username(pet_slug, username)
+
+    if not is_owner(request, pet):
+        return redirect('details pet', username=username, pet_slug=pet_slug)
 
     if request.method == 'GET':
         form = PetEditForm(instance=pet)
