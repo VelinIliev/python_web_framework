@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'temp_project.user_and_pass',
     'temp_project.web',
     'temp_project.web_tools',
+    # 'temp_project.tests',
 ]
 
 MIDDLEWARE = [
